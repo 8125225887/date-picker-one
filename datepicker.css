@@ -1,0 +1,21 @@
+table {
+  margin-left: 150px;
+  position:absolute;
+  padding: 2px;
+}
+
+td {
+  align-items: center;
+}
+
+
+#sta {
+    width: 100px;
+    position:static;
+}
+.cursor {
+  cursor: pointer;
+}
+#table1  {
+  width: 290px;
+}
