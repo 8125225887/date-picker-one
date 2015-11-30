@@ -3,14 +3,17 @@ var array_index = 0;
 var d = new Date();
 var display_one,display_two;
 var month_value = d.getMonth() + 1;
+var month_set = 0;
+var detach;
 
   function myDatePicker() {
+      detach = $("#table1,#table2").show();
       display_one = "<table id = 'table1' border = '1'>"
       display_one += "<tr>"
       display_one += "<td><font onclick = 'clickSelection(0)' class = 'cursor'> <  </font></td>"
       display_one += "<td id = 'sta'><font id = 'month'>" + month[d.getMonth()] +" &nbsp;&nbsp; </font></td>"
       display_one += "<td><font onclick = 'clickSelection(1)' class = 'cursor'> > </font></td>"
-      display_one += "<td><select id='year' onchange = 'setMonthDays("+ d.getMonth() +")'>"
+      display_one += "<td><select id='year' onchange = 'dropDownSelection()'>"
       display_one += "<option value='2015'>2015</option>"
       display_one += "<option value='2014'>2014</option>"
       display_one += "<option value='2013'>2013</option>"
@@ -70,8 +73,9 @@ var month_value = d.getMonth() + 1;
       boolean = false;
   }
   function incrementDecrement(value,index) {
+       flag = false;
        array_index = index;
-      if (value === 0) {
+       if (value === 0) {
           if (array_index === 0 ) {
             $("#month").text(month[array_index]);
             setMonthDays(array_index);
@@ -95,8 +99,16 @@ var month_value = d.getMonth() + 1;
               }
           }
       }
+      month_set = array_index;
       month_value = array_index;
       month_value++;
+  }
+
+
+  var flag = true;
+  function dropDownSelection() {
+      flag ? setMonthDays(d.getMonth()) : setMonthDays(month_set);
+      flag = false;
   }
   function setMonthDays(index) {
       var index = index;
@@ -104,7 +116,7 @@ var month_value = d.getMonth() + 1;
       var set_days = 0;
       var no_of_days = new Date(year,index + 1,0).getDate();
       var d1=new Date();
-      d1.setFullYear(year,index,1); //set the first day of the specified month and current year
+      d1.setFullYear(year,index,1); //set the first day of the specified month and year
       var first = d1.getDay();  // taking day of the specified month
 
       for ( var rows = 1; rows <= 6; rows++) {
@@ -133,5 +145,5 @@ var month_value = d.getMonth() + 1;
       var day_value = parseInt($("#table2 tr:eq(" + row +") td:eq(" + coloumn +")").text());
       console.log(year_value,month_value,day_value);
       $("#result").val(day_value + "/" + month_value + "/" + year_value);
-      location.reload();
+      detach = $("#table1,#table2").hide();
   }
